@@ -18,7 +18,7 @@ public class MySQLHandler {
 	public String host, database, username, password, table, url;
 	public int port;
 	private Connection con;
-	// private MySQLGetSet MySQLGetSet;
+	
 	private Main plugin;
 	private MySQLGetSet MySQLGetSet;
 
