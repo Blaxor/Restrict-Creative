@@ -1,4 +1,4 @@
-package ro.deiutzblaxo.Hookers;
+package ro.deiutzblaxo.RestrictCreative.Hookers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

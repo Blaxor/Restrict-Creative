@@ -1,4 +1,4 @@
-package ro.deiutzblaxo.mySQL;
+package ro.deiutzblaxo.RestrictCreative.mySQL;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;

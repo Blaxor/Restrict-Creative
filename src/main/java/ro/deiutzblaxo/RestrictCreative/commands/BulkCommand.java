@@ -1,4 +1,4 @@
-package ro.deiutzblaxo.commands;
+package ro.deiutzblaxo.RestrictCreative.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
