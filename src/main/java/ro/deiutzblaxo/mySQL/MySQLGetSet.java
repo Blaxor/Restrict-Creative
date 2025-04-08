@@ -1,4 +1,4 @@
-package ro.deiutzblaxo.RestrictCreative.mySQL;
+package ro.deiutzblaxo.mySQL;
 
 import java.io.File;
 import java.sql.PreparedStatement;

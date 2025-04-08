@@ -1,4 +1,4 @@
-package ro.deiutzblaxo.RestrictCreative.commands;
+package ro.deiutzblaxo.commands;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
