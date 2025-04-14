@@ -17,7 +17,7 @@ public class ResctrictCreativeCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] arg3) {
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-				"&7[&aRestrictCreative&7]&r Plugin by Deiutz, Version: " + plugin.getDescription().getVersion()));
+				"&7[&aRestrictCreative&7]&r Plugin by JDeiutz, Version: " + plugin.getDescription().getVersion()));
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&aRestrictCreative&7]&r Link to spigot: https://www.spigotmc.org/resources/66007/ "));
 		return false;
 	}
