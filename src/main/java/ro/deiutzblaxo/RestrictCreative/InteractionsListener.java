@@ -427,20 +427,12 @@ public class InteractionsListener implements Listener {
 
     @EventHandler
     public void onFallingBlocks(EntityChangeBlockEvent event) {
-        if (event.getEntityType() == EntityType.FALLING_BLOCK) {
+        if (event.getBlock().getType() == Material.SAND || event.getBlock().getType() == Material.GRAVEL) {
             if (plugin.getMark().isMarked(event.getBlock().getLocation())) {
                 event.setCancelled(true);
                 event.getBlock().getState().update(true, true);
             }
         }
-    }
-
-    @EventHandler
-    public void onBlockPhysicsEvent(BlockPhysicsEvent event) {
-        if (plugin.getMark().isMarked(event.getBlock().getLocation())) {
-            event.setCancelled(true);
-        }
-
     }
 
     @EventHandler

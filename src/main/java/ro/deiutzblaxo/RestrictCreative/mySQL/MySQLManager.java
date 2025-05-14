@@ -79,9 +79,7 @@ public class MySQLManager {
 
                     e1.printStackTrace();
                 }
-                return;
             }
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
 
@@ -93,10 +91,9 @@ public class MySQLManager {
 
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
-                Bukkit.getLogger().log(Level.INFO, "Using offline database.");
+                Bukkit.getLogger().log(Level.WARNING, "Using offline database.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
