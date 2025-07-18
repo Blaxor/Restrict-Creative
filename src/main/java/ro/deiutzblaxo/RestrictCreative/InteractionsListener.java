@@ -25,6 +25,8 @@ import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import ro.deiutzblaxo.RestrictCreative.Hookers.WorldGuardHooker;
+import ro.deiutzblaxo.RestrictCreative.config.enums.GeneralConfigurationEnum;
+import ro.deiutzblaxo.RestrictCreative.config.enums.MessageEnum;
 
 public class InteractionsListener implements Listener {
     protected Main plugin;
@@ -53,7 +55,7 @@ public class InteractionsListener implements Listener {
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event) {
-        if (!plugin.getConfigManager().getConfig().getString("Disabled-Items").isEmpty()) {
+        if (!plugin.getConfigManager().getListStringValue(GeneralConfigurationEnum.DisabledItems).isEmpty()) {
             if (!event.getWhoClicked().hasPermission(BypassDisabledItemsPermission)) {
                 if (plugin.getConfigManager().getBannedItems().contains(event.getCursor().getType())) {
 
@@ -64,7 +66,7 @@ public class InteractionsListener implements Listener {
             }
         }
 
-        if (plugin.getConfigManager().getConfig().getBoolean("RestrictInventoryPut")) {
+        if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.RestrictInventoryPut)) {
             if (!event.getWhoClicked().hasPermission(BypassChestPermission)) {
 
                 for (InventoryType c : InventoryType.values()) {
@@ -77,7 +79,7 @@ public class InteractionsListener implements Listener {
                                 if (item != null && (plugin.getMark().isCreativeItem(item))) {
                                     event.setCancelled(true);
                                     event.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                            plugin.getConfigManager().getMessage().getString("ErrorInventoryPut")));
+                                            plugin.getConfigManager().getStringValue(MessageEnum.ERROR_INVENTORY_PUT)));
                                 }
                             }
                         }
@@ -86,7 +88,7 @@ public class InteractionsListener implements Listener {
 
                             if (item != null && (plugin.getMark().isCreativeItem(item))) {
                                 event.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                        plugin.getConfigManager().getMessage().getString("ErrorInventoryPut")));
+                                        plugin.getConfigManager().getStringValue(MessageEnum.ERROR_INVENTORY_PUT)));
                                 event.setCancelled(true);
                             }
                         }
@@ -107,7 +109,7 @@ public class InteractionsListener implements Listener {
             Player damager = (Player) e.getDamager();
             if (e.getEntity() instanceof Player) {
 
-                if (plugin.getConfigManager().getConfig().getBoolean("PvP")) {
+                if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.PvP)) {
                     if (!damager.hasPermission(BypassPvPPermission)) {
                         if (plugin.getMark().isCreativeItem(damager.getInventory().getItemInMainHand())) {
                             e.setCancelled(true);
@@ -117,7 +119,7 @@ public class InteractionsListener implements Listener {
                 }
             } else {
                 if (!damager.hasPermission(BypassPvEPermission)) {
-                    if (plugin.getConfigManager().getConfig().getBoolean("PVE")) {
+                    if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.PvE)) {
                         if (plugin.getMark().isCreativeItem(damager.getInventory().getItemInMainHand())) {
                             e.setCancelled(true);
                             return;
@@ -132,7 +134,7 @@ public class InteractionsListener implements Listener {
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent event) {
 
-        if (plugin.getConfigManager().getConfig().getBoolean("RestrictInventoryPut")) {
+        if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.RestrictInventoryPut)) {
             if (!event.getWhoClicked().hasPermission(BypassChestPermission)) {
                 ItemStack item = event.getOldCursor();
                 for (InventoryType c : InventoryType.values()) {
@@ -144,7 +146,7 @@ public class InteractionsListener implements Listener {
                                 if (i < invSize) {
                                     event.setCancelled(true);
                                     event.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                            plugin.getConfigManager().getMessage().getString("ErrorInventoryPut")));
+                                            plugin.getConfigManager().getStringValue(MessageEnum.ERROR_INVENTORY_PUT)));
                                     break;
                                 }
                             }
@@ -267,13 +269,13 @@ public class InteractionsListener implements Listener {
 
         if (plugin.getMark().isCreativeItem(e.getItemInHand()) || e.getPlayer().getGameMode() == GameMode.CREATIVE) {
             if (e.getItemInHand().getType().equals(Material.TNT)) {
-                if (plugin.getConfigManager().getConfig().getBoolean("Debug")) {
+                if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
                     plugin.getServer().getConsoleSender().sendMessage("is tnt , in creative");
                 }
                 e.setCancelled(true);
             } else {
                 plugin.getMark().setMark(e.getBlockPlaced().getLocation());
-                if (plugin.getConfigManager().getConfig().getBoolean("Debug")) {
+                if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
                     plugin.getServer().getConsoleSender().sendMessage("not tnt , in creative");
                 }
             }
@@ -339,7 +341,7 @@ public class InteractionsListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onBlockSpreadEvent(BlockSpreadEvent e) {
-        if (plugin.getConfigManager().getConfig().getBoolean("DisableBlockSpreadEvent")) {
+        if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.DisableBlockSpreadEvent)) {
 
             if (plugin.getMark().isMarked(e.getSource().getLocation())) {
 
@@ -350,7 +352,7 @@ public class InteractionsListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onStructureGrowEvent(StructureGrowEvent e) {
-        if (plugin.getConfigManager().getConfig().getBoolean("DisableStructureGrowEvent")) {
+        if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.DisableBlockGrowEvent)) {
             if (plugin.getMark().isMarked(e.getLocation())) {
                 e.setCancelled(true);
             }
@@ -360,7 +362,7 @@ public class InteractionsListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onBlockGrowEvent(BlockGrowEvent e) {
-        if (!plugin.getConfigManager().getConfig().getBoolean("DisableBlockGrowEvent")) {
+        if (!plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.DisableBlockGrowEvent)) {
             return;
         }
         Location loc = e.getBlock().getLocation();
@@ -394,7 +396,7 @@ public class InteractionsListener implements Listener {
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(
                         ChatColor.translateAlternateColorCodes('&',
-                                plugin.getConfigManager().getMessage().getString("ErrorDropItem")));
+                                plugin.getConfigManager().getStringValue(MessageEnum.ERROR_DROP_ITEM)));
             } else {
                 e.setCancelled(false);
             }
@@ -404,7 +406,7 @@ public class InteractionsListener implements Listener {
 
     @EventHandler
     public void onPistonExtend(BlockPistonExtendEvent e) {
-        if (plugin.getConfigManager().getConfig().getBoolean("BlockPistonPush")) {
+        if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.BlockPistonPush)) {
             for (Block block : e.getBlocks()) {
                 if (plugin.getMark().isMarked(block.getLocation())) {
                     e.setCancelled(true);
@@ -415,7 +417,7 @@ public class InteractionsListener implements Listener {
 
     @EventHandler
     public void onPistonRetreat(BlockPistonRetractEvent e) {
-        if (plugin.getConfigManager().getConfig().getBoolean("BlockPistonPush")) {
+        if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.BlockPistonPush)) {
             for (Block block : e.getBlocks()) {
                 if (plugin.getMark().isMarked(block.getLocation())) {
                     e.setCancelled(true);
@@ -444,7 +446,7 @@ public class InteractionsListener implements Listener {
                     || e.getClickedBlock().getType() == Material.matchMaterial("GRINDSTONE")) {
                 if (plugin.getMark().isMarked(e.getClickedBlock().getLocation())) {
                     e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',
-                            plugin.getConfigManager().getMessage().getString("StoneCutter_GrindStone_Restrict")));
+                            plugin.getConfigManager().getStringValue(MessageEnum.STONECUTTER_GRINDSTONE_RESTRICT)));
                     e.setCancelled(true);
                 }
             }

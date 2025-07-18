@@ -14,6 +14,8 @@ import ro.deiutzblaxo.RestrictCreative.Metrics.Metrics;
 import ro.deiutzblaxo.RestrictCreative.commands.BulkCommand;
 import ro.deiutzblaxo.RestrictCreative.commands.ImportBaseDatas;
 import ro.deiutzblaxo.RestrictCreative.commands.ResctrictCreativeCommand;
+import ro.deiutzblaxo.RestrictCreative.config.ConfigManager;
+import ro.deiutzblaxo.RestrictCreative.config.enums.GeneralConfigurationEnum;
 import ro.deiutzblaxo.RestrictCreative.mySQL.DataService;
 import ro.deiutzblaxo.RestrictCreative.mySQL.LocationHandler;
 import ro.deiutzblaxo.RestrictCreative.mySQL.MySQLManager;
@@ -51,14 +53,15 @@ public class Main extends JavaPlugin implements Listener {
         getCommand("bulk").setExecutor(new BulkCommand(this));
 
 
-        if (getConfigManager().getConfig().getBoolean("UpdaterChecker")) {
+        if (getConfigManager().getBooleanValue(GeneralConfigurationEnum.UpdaterChecker)) {
             updateCheckerConsole(this, ChatColor.translateAlternateColorCodes('&', "&7[&aRestrictCreative&7]"), 66007);
         }
+
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (getConfigManager().getConfig().getBoolean("UpdaterChecker")) {
+        if (getConfigManager().getBooleanValue(GeneralConfigurationEnum.UpdaterChecker)) {
             if (e.getPlayer().isOp()) {
 
                 updateCheckerPlayer(this, e.getPlayer(),
@@ -77,9 +80,8 @@ public class Main extends JavaPlugin implements Listener {
 
             e.printStackTrace();
         }
-        if (getConfigManager().getDatabase() != null) {
-            getConfigManager().saveDataBase();
-        }
+        getConfigManager().saveDataBase();
+
 
     }
 
@@ -146,7 +148,7 @@ public class Main extends JavaPlugin implements Listener {
     public void loadConfigManager() {
 
         getConfigManager().SetupFiles();
-        getConfigManager().SaveMessages();
+        getConfigManager().initDefaultsConfig();
         getConfigManager().LoadConfigs();
     }
 

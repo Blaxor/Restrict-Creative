@@ -73,6 +73,12 @@
       <version>7.0.13</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.32</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <properties>
     <maven.compiler.target>21</maven.compiler.target>

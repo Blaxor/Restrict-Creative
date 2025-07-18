@@ -13,6 +13,7 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.world.World;
 
 import ro.deiutzblaxo.RestrictCreative.Main;
+import ro.deiutzblaxo.RestrictCreative.config.enums.MessageEnum;
 
 public class WorldEditHoocker {
 
@@ -41,13 +42,13 @@ public class WorldEditHoocker {
 						region = player.getSelection(player.getSelectionWorld());
 					} catch (Exception e) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&',
-								plugin.getConfigManager().getMessage().getString("WorldEdit_AreaNotSelected")));
+								plugin.getConfigManager().getStringValue(MessageEnum.WORLDEDIT_AREA_NOT_SELECTED)));
 					} finally {
 						if (region == null) {
 							return;
 						} else {
 							p.sendMessage(ChatColor.translateAlternateColorCodes('&',
-									plugin.getConfigManager().getMessage().getString("WorldEdit_AreaNotSelected")));
+									plugin.getConfigManager().getStringValue(MessageEnum.WORLDEDIT_AREA_NOT_SELECTED)));
 						}
 					}
 					int i = 0;
@@ -75,7 +76,7 @@ public class WorldEditHoocker {
 						}
 					}
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&',
-							plugin.getConfigManager().getMessage().getString("Bulk_Marking_Finish")
+							plugin.getConfigManager().getStringValue(MessageEnum.BULK_MARK_FINISH)
 							.replaceAll("%blocks%", "" + i)));
 
 				}

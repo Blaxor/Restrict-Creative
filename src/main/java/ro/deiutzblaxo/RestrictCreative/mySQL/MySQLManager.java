@@ -3,6 +3,7 @@ package ro.deiutzblaxo.RestrictCreative.mySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import ro.deiutzblaxo.RestrictCreative.Main;
+import ro.deiutzblaxo.RestrictCreative.config.enums.GeneralConfigurationEnum;
 
 import java.sql.*;
 import java.util.logging.Level;
@@ -142,7 +143,7 @@ public class MySQLManager {
 
 
     public Connection getConnection() {
-        if (plugin.getConfigManager().getConfig().getBoolean("Debug")) {
+        if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
             if (con == null) {
                 Bukkit.getLogger().log(Level.INFO, "The connection with the database don`t exist!");
             } else {

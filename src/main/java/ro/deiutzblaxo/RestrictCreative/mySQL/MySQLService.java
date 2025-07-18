@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import ro.deiutzblaxo.RestrictCreative.Main;
+import ro.deiutzblaxo.RestrictCreative.config.enums.GeneralConfigurationEnum;
 
 import java.io.File;
 import java.sql.PreparedStatement;
@@ -143,7 +144,7 @@ public class MySQLService {
                     for (String loc : locations) {
 
                         nrMoved++;
-                        if (pl.getConfigManager().getConfig().getBoolean("Debug")) {
+                        if (pl.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
                             if (nrMoved % 100 == 0) {
 
                                 Bukkit.broadcastMessage("Progress : " + nrMoved + "/" + locations.size());
@@ -158,7 +159,7 @@ public class MySQLService {
                                 ArrayList<World> countWorld = new ArrayList<World>();
 
                                 for (World world : pl.getServer().getWorlds()) {
-                                    if (pl.getConfigManager().getConfig().getBoolean("Debug")) {
+                                    if (pl.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
 
                                         System.out.println("Checking the world named" + world.getName()
                                                 + " for the location  " + loc);
@@ -166,7 +167,7 @@ public class MySQLService {
                                     if (!world.getBlockAt((int) Double.parseDouble(l[0]),
                                                     (int) Double.parseDouble(l[1]), (int) Double.parseDouble(l[2])).getType()
                                             .isAir()) {
-                                        if (pl.getConfigManager().getConfig().getBoolean("Debug")) {
+                                        if (pl.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
                                             System.out.println("is not air ");
                                             System.out.println(world.getBlockAt((int) Double.parseDouble(l[0]),
                                                             (int) Double.parseDouble(l[1]), (int) Double.parseDouble(l[2]))
@@ -175,13 +176,13 @@ public class MySQLService {
                                         countWorld.add(world);
 
                                     } else {
-                                        if (pl.getConfigManager().getConfig().getBoolean("Debug")) {
+                                        if (pl.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
                                             System.out.println("is air");
                                         }
                                     }
                                 }
                                 if (countWorld.size() == 1) {
-                                    if (pl.getConfigManager().getConfig().getBoolean("Debug")) {
+                                    if (pl.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
                                         System.out.println("Location changed for " + loc);
                                     }
                                     createLocation(loc + " " + countWorld.get(0).getName());
@@ -189,7 +190,7 @@ public class MySQLService {
 
                                 } else if (countWorld.size() == 0) {
                                     countWorld.clear();
-                                    if (pl.getConfigManager().getConfig().getBoolean("Debug")) {
+                                    if (pl.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
                                         System.out.println("Location deleted :" + loc);
                                     }
                                 } else {

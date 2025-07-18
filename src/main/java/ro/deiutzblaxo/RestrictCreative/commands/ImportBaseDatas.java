@@ -7,6 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import ro.deiutzblaxo.RestrictCreative.Main;
+import ro.deiutzblaxo.RestrictCreative.config.enums.GeneralConfigurationEnum;
+import ro.deiutzblaxo.RestrictCreative.config.enums.MessageEnum;
 import ro.deiutzblaxo.RestrictCreative.mySQL.MySQLManager;
 
 import java.sql.*;
@@ -47,7 +49,7 @@ public class ImportBaseDatas implements CommandExecutor {
                                 }
                                 for (String l : locs) {
                                     plugin.getDataService().createLocation(l);
-                                    if (plugin.getConfigManager().getConfig().getBoolean("Debug")) {
+                                    if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
                                         plugin.getServer().getConsoleSender()
                                                 .sendMessage("Moving the location " + l + " from local to online");
 
@@ -102,7 +104,7 @@ public class ImportBaseDatas implements CommandExecutor {
                                                 insert.close();
                                             }
                                         }
-                                        if (plugin.getConfigManager().getConfig().getBoolean("Debug")) {
+                                        if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
                                             plugin.getServer().getConsoleSender()
                                                     .sendMessage("The location " + loc + "has move from Online to local");
                                         }
@@ -126,7 +128,7 @@ public class ImportBaseDatas implements CommandExecutor {
             return false;
         } else {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    plugin.getConfigManager().getMessage().getString("noPermission")));
+                    plugin.getConfigManager().getStringValue(MessageEnum.NO_PERMISSION)));
             return false;
         }
 

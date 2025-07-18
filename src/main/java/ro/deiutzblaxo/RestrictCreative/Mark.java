@@ -7,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import ro.deiutzblaxo.RestrictCreative.config.enums.GeneralConfigurationEnum;
+import ro.deiutzblaxo.RestrictCreative.config.enums.MessageEnum;
 import ro.deiutzblaxo.RestrictCreative.nbt.NBTUtil;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class Mark {
     public void setMark(Location l) {
 
         plugin.getDataService().createLocation(LocationConvert(l));
-        if (plugin.getConfigManager().getConfig().getBoolean("Debug")) {
+        if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
             Bukkit.getLogger().log(
                     Level.INFO,
                     "The block from cords " + LocationConvert(l) + " have been MARKED and add to MySQL");
@@ -33,7 +35,7 @@ public class Mark {
 
     public boolean isMarked(Location l) {
         if (plugin.getDataService().locationExists(LocationConvert(l))) {
-            if (plugin.getConfigManager().getConfig().getBoolean("Debug")) {
+            if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
 
                 Bukkit.getLogger().log(Level.INFO, "The block from cords " + LocationConvert(
                         l)
@@ -52,7 +54,7 @@ public class Mark {
 
         if (isMarked(l)) {
             plugin.getDataService().removeLocation(LocationConvert(l));
-            if (plugin.getConfigManager().getConfig().getBoolean("Debug")) {
+            if (plugin.getConfigManager().getBooleanValue(GeneralConfigurationEnum.Debug)) {
                 Bukkit.getLogger().log(Level.INFO,
                         "The block from cords " + LocationConvert(l) + " have been REMOVED from MySQL");
             }
@@ -79,7 +81,7 @@ public class Mark {
                         lore = (ArrayList<String>) meta.getLore();
                     plugin.getConfigManager().LoadConfigs();
                     lore.add(0, ChatColor.translateAlternateColorCodes('&',
-                            plugin.getConfigManager().getMessage().getString("LoreMessage").replaceAll("%name%",
+                            plugin.getConfigManager().getStringValue(MessageEnum.LORE_MESSAGE).replaceAll("%name%",
                                     playerName)));
                     meta.setLore(lore);
                     item.setItemMeta(meta);
@@ -100,7 +102,7 @@ public class Mark {
                     for (String s : meta.getLore()) {
                         plugin.getConfigManager().LoadConfigs();
                         if (s.startsWith(ChatColor.translateAlternateColorCodes('&',
-                                plugin.getConfigManager().getMessage().getString("LoreMessage").replace("%name%", ""))))
+                                plugin.getConfigManager().getStringValue(MessageEnum.LORE_MESSAGE).replace("%name%", ""))))
                             return NBTUtil.isCreativeItem(item);
                     }
                 }
