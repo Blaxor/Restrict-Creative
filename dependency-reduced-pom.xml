@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ro.deiutzblaxo</groupId>
   <artifactId>Restrict-Creative</artifactId>
-  <version>6.1.0</version>
+  <version>6.1.1</version>
   <build>
     <resources>
       <resource>
@@ -26,6 +26,10 @@
                 <relocation>
                   <pattern>de.tr7zw</pattern>
                   <shadedPattern>ro.deiutzblaxo.RestrictCreative.shaded.nbtapi</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>de.rapha149.signgui</pattern>
+                  <shadedPattern>ro.deiutzblaxo.RestrictCreative.shaded.signgui</shadedPattern>
                 </relocation>
               </relocations>
             </configuration>

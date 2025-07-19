@@ -24,7 +24,7 @@ import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import ro.deiutzblaxo.RestrictCreative.Hookers.WorldGuardHooker;
+import ro.deiutzblaxo.RestrictCreative.hookers.WorldGuardHooker;
 import ro.deiutzblaxo.RestrictCreative.config.enums.GeneralConfigurationEnum;
 import ro.deiutzblaxo.RestrictCreative.config.enums.MessageEnum;
 

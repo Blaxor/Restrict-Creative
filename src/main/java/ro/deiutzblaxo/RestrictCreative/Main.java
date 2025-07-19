@@ -1,5 +1,6 @@
 package ro.deiutzblaxo.RestrictCreative;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -16,6 +17,8 @@ import ro.deiutzblaxo.RestrictCreative.commands.ImportBaseDatas;
 import ro.deiutzblaxo.RestrictCreative.commands.ResctrictCreativeCommand;
 import ro.deiutzblaxo.RestrictCreative.config.ConfigManager;
 import ro.deiutzblaxo.RestrictCreative.config.enums.GeneralConfigurationEnum;
+import ro.deiutzblaxo.RestrictCreative.menu.MenuManager;
+import ro.deiutzblaxo.RestrictCreative.menu.listener.InventoryClickListener;
 import ro.deiutzblaxo.RestrictCreative.mySQL.DataService;
 import ro.deiutzblaxo.RestrictCreative.mySQL.LocationHandler;
 import ro.deiutzblaxo.RestrictCreative.mySQL.MySQLManager;
@@ -30,20 +33,25 @@ import java.sql.SQLException;
 
 public class Main extends JavaPlugin implements Listener {
 
+    private static Main instance;
+
     private Mark Mark;
     private ConfigManager ConfigManager;
     private MySQLManager database;
     private LocationHandler dataService;
+    @Getter
+    private MenuManager menuManager;
 
     @Override
     public void onEnable() {
-
+        instance = this;
         setConfigManager(new ConfigManager(this));
         loadConfigManager();
         setMark(new Mark(this));
         getConfigManager().LoadConfigs();
         database = new MySQLManager(this);
         dataService = new DataService(new MySQLService(database));
+        menuManager = new MenuManager(this);
 
         registerByVersion(this);
 
@@ -156,6 +164,8 @@ public class Main extends JavaPlugin implements Listener {
 
         getServer().getPluginManager().registerEvents(new InteractionsListener(this), this);
 
+        getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
+
         Metrics metrics = new Metrics(plugin);
         metrics.addCustomChart(new Metrics.SingleLineChart("placed", () -> getDataService().getLocations().size()));
 
@@ -180,5 +190,9 @@ public class Main extends JavaPlugin implements Listener {
 
     public LocationHandler getDataService() {
         return dataService;
+    }
+
+    public static Main getPlugin() {
+        return instance;
     }
 }
